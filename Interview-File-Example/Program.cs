@@ -289,89 +289,19 @@ namespace InterviewTest
             bas.Add(newAccount);
         }
 
-        public void ProcessTransaction(string accountName, string transactionType, double transactionAmount, DateTime transactionDate, string transactionDescription)
+        public void ProcessTransaction(int transactionid, string accountName, string transactionType, double transactionAmount, DateTime transactionDate, string transactionDescription)
         {
             var account = bas.FirstOrDefault(a => a.aName == accountName);
-            if (account != null)
-            {
-                account.AddTransaction(transactionType, transactionAmount, transactionDate, transactionDescription);
-            }
+                
+            account.Add__Transaction(transactionid, transactionType, transactionAmount, transactionDate, transactionDescription);
+            
         }
 
         public void UpdateAllTransactions()
         {
             foreach (var account in bas)
             {
-                account.UpdateTransactions();
-            }
-        }
-
-        public void PrintBank()
-        {
-            foreach (var account in bas)
-            {
-                account.PrintAccount();
-            }
-        }
-
-        // ...
-
-        // Method with unnecessary functionality (YAGNI)
-        public void CalculateTotalBankBalance_And_PrintIt()
-        {
-            double totalBalance = 0;
-            foreach (var account in bas)
-            {
-                totalBalance += account.aBalance;
-            }
-            Console.WriteLine("Total bank balance: " + totalBalance);
-        }
-
-        // Method with unnecessary parameters (YAGNI)
-        public void AddAccount_WithUnnecessaryParameters(string name, double balance, string unnecessaryParameter1, int unnecessaryParameter2, DateTime unnecessaryParameter3)
-        {
-            Account newAccount = new Account(name, balance);
-            bas.Add(newAccount);
-        }
-
-        // Method with hard-coded values (magic numbers/strings)
-        public void AddDefaultAccount()
-        {
-            Account newAccount = new Account("Default", 1000);
-            bas.Add(newAccount);
-        }
-
-        // Method with ignored exceptions
-        public void ProcessTransaction_IgnoreExceptions(string accountName, string transactionType, double transactionAmount, DateTime transactionDate, string transactionDescription)
-        {
-            try
-            {
-                var account = bas.First(a => a.aName == accountName);
-                account.AddTransaction(transactionType, transactionAmount, transactionDate, transactionDescription);
-            }
-            catch
-            {
-                // Ignore exceptions
-            }
-        }
-
-        // Method with code repetition
-        public void ProcessTransaction_CodeRepetition(string accountName, string transactionType, double transactionAmount, DateTime transactionDate, string transactionDescription)
-        {
-            var account = bas.FirstOrDefault(a => a.aName == accountName);
-            if (account != null)
-            {
-                Transaction newTransaction = new Transaction(transactionType, transactionAmount, transactionDate, transactionDescription);
-                account.aTransactions.Add(newTransaction);
-
-                if (transactionType == "deposit")
-                {
-                    account.aBalance += transactionAmount;
-                }
-                else if (transactionType == "withdraw")
-                {
-                    account.aBalance -= transactionAmount;
-                }
+                account.Update_Fee_Transactions();
             }
         }
     }
@@ -382,9 +312,8 @@ namespace InterviewTest
         {
             Bank bank = new Bank();
             bank.AddAccount("John Doe", 1000);
-            bank.ProcessTransaction("John Doe", "deposit", 500, DateTime.Now, "Deposit from John Doe");
-            bank.ProcessTransaction("John Doe", "withdraw", 200, DateTime.Now, "Withdrawal by John Doe");
-            bank.PrintBank();
+            bank.ProcessTransaction(1011827261, "John Doe", "deposit", 500, DateTime.Now, "Deposit from John Doe");
+            bank.ProcessTransaction(1011827262, "Dan Kolov", "withdraw", 200, DateTime.Now, "Withdrawal by Dan Kolov");
         }
     }
 }
